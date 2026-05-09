@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oxford Global MBA Assessment</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Oxford Global Assessment Portal</h1>
+    <p>MBA Marketing Proctored Examination</p>
+</div>
+
+<div class="topbar">
+    <div id="timer">90:00</div>
+    <div>60 Questions • 1 Mark Each</div>
+</div>
+
+<div class="container">
+
+    <div class="left-panel">
+
+        <h2>Live Proctoring</h2>
+
+        <video id="video" autoplay muted></video>
+
+        <div class="proctor-status">
+            <p id="cameraStatus">Camera Active</p>
+            <p id="location">Requesting Location...</p>
+        </div>
+
+    </div>
+
+    <div class="right-panel">
+
+        <div id="question-box"></div>
+
+        <div class="buttons">
+            <button onclick="prevQuestion()">Previous</button>
+            <button onclick="skipQuestion()">Skip</button>
+            <button onclick="nextQuestion()">Next</button>
+            <button onclick="submitExam()">Submit</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+question: "Which marketing philosophy emphasizes achieving organizational goals while preserving consumer and societal welfare?",
+answer: "Societal Marketing Concept",
+options: [
+"Production Concept",
+"Selling Concept",
+"Societal Marketing Concept",
+"Product Concept"
+]
+},
+
+{
+question: "In Porter’s Generic Strategies, sustained competitive advantage through uniqueness is achieved using:",
+answer: "Differentiation Strategy",
+options: [
+"Focus Strategy",
+"Cost Leadership",
+"Differentiation Strategy",
+"Market Penetration"
+]
+},
+
+{
+question: "What does customer equity primarily represent?",
+answer: "Total combined customer lifetime values",
+options: [
+"Annual revenue",
+"Total combined customer lifetime values",
+"Gross market share",
+"Net promoter score"
+]
+},
+
+{
+question: "Which pricing strategy involves setting high prices initially before gradually reducing them?",
+answer: "Price Skimming",
+options: [
+"Penetration Pricing",
+"Value Pricing",
+"Price Skimming",
+"Predatory Pricing"
+]
+},
+
+{
+question: "Which framework evaluates Political, Economic, Social and Technological factors?",
+answer: "PEST Analysis",
+options: [
+"BCG Matrix",
+"SWOT Analysis",
+"PEST Analysis",
+"Ansoff Matrix"
+]
+},
+
+{
+question: "Which consumer behavior theory suggests purchases align with an individual’s self-image?",
+answer: "Self Concept Theory",
+options: [
+"Maslow Theory",
+"Self Concept Theory",
+"Behavioral Theory",
+"Motivation Theory"
+]
+},
+
+{
+question: "A company extending an established brand into new categories is practicing:",
+answer: "Brand Extension",
+options: [
+"Co-branding",
+"Brand Cannibalization",
+"Brand Extension",
+"Brand Dilution"
+]
+},
+
+{
+question: "Which metric evaluates profitability generated from a customer relationship over time?",
+answer: "Customer Lifetime Value",
+options: [
+"Market Share",
+"Customer Lifetime Value",
+"ROI",
+"Engagement Rate"
+]
+},
+
+{
+question: "The BCG Matrix category with low growth but high market share is:",
+answer: "Cash Cows",
+options: [
+"Question Marks",
+"Dogs",
+"Stars",
+"Cash Cows"
+]
+},
+
+{
+question: "In digital marketing, bounce rate measures:",
+answer: "Visitors leaving without interaction",
+options: [
+"Visitors leaving without interaction",
+"Advertising ROI",
+"Cost per acquisition",
+"Brand engagement"
+]
+},
+
+{
+question: "What is the primary objective of positioning?",
+answer: "Occupying a unique place in consumer minds",
+options: [
+"Reducing manufacturing cost",
+"Occupying a unique place in consumer minds",
+"Expanding production",
+"Improving logistics"
+]
+},
+
+{
+question: "Which market structure consists of many sellers offering differentiated products?",
+answer: "Monopolistic Competition",
+options: [
+"Perfect Competition",
+"Monopoly",
+"Oligopoly",
+"Monopolistic Competition"
+]
+},
+
+{
+question: "What is the major drawback of qualitative research?",
+answer: "Lack of statistical reliability",
+options: [
+"High operational cost",
+"Lack of statistical reliability",
+"Low engagement",
+"Poor scalability"
+]
+},
+
+{
+question: "Which adoption category purchases innovations immediately after innovators?",
+answer: "Early Adopters",
+options: [
+"Laggards",
+"Late Majority",
+"Early Majority",
+"Early Adopters"
+]
+},
+
+{
+question: "Which pricing method begins with customer perceived value?",
+answer: "Value Based Pricing",
+options: [
+"Cost Plus Pricing",
+"Competitive Pricing",
+"Value Based Pricing",
+"Markup Pricing"
+]
+},
+
+{
+question: "In services marketing, inseparability means:",
+answer: "Production and consumption occur simultaneously",
+options: [
+"Services cannot be stored",
+"Services lack ownership",
+"Production and consumption occur simultaneously",
+"Demand fluctuates seasonally"
+]
+},
+
+{
+question: "Integrated Marketing Communications primarily seeks:",
+answer: "Consistent brand messaging",
+options: [
+"Reduced advertising costs",
+"Consistent brand messaging",
+"Improved warehousing",
+"Supply chain optimization"
+]
+},
+
+{
+question: "Which strategy focuses on increasing sales of existing products in existing markets?",
+answer: "Market Penetration",
+options: [
+"Product Development",
+"Diversification",
+"Market Development",
+"Market Penetration"
+]
+},
+
+{
+question: "Which factor most strongly affects organizational buying behavior?",
+answer: "Formal procurement policies",
+options: [
+"Impulse buying",
+"Brand personality",
+"Formal procurement policies",
+"Personal preference"
+]
+},
+
+{
+question: "Perceived value refers to:",
+answer: "Evaluation of benefits versus costs",
+options: [
+"Inventory turnover",
+"Evaluation of benefits versus costs",
+"Market capitalization",
+"Distribution efficiency"
+]
+},
+
+{
+question: "Which branding strategy assigns separate brand names to each product?",
+answer: "Individual Branding",
+options: [
+"Corporate Branding",
+"Umbrella Branding",
+"Family Branding",
+"Individual Branding"
+]
+},
+
+{
+question: "Consumer ethnocentrism refers to:",
+answer: "Preference for domestic products",
+options: [
+"Preference for domestic products",
+"Preference for luxury brands",
+"Preference for imported goods",
+"Preference for discounts"
+]
+},
+
+{
+question: "What does CAC stand for?",
+answer: "Customer Acquisition Cost",
+options: [
+"Campaign Activity Control",
+"Customer Acquisition Cost",
+"Customer Awareness Conversion",
+"Central Advertising Cost"
+]
+},
+
+{
+question: "Which element is NOT a characteristic of services?",
+answer: "Ownership",
+options: [
+"Heterogeneity",
+"Inseparability",
+"Perishability",
+"Ownership"
+]
+},
+
+{
+question: "What does elasticity of demand measure?",
+answer: "Demand responsiveness to price changes",
+options: [
+"Consumer loyalty",
+"Demand responsiveness to price changes",
+"Sales consistency",
+"Market profitability"
+]
+},
+
+{
+question: "The process of selecting attractive market segments is:",
+answer: "Target Market Selection",
+options: [
+"Positioning",
+"Branding",
+"Target Market Selection",
+"Differentiation"
+]
+},
+
+{
+question: "Which metric tracks users completing a desired online action?",
+answer: "Conversion Rate",
+options: [
+"Bounce Rate",
+"CTR",
+"Conversion Rate",
+"CPC"
+]
+},
+
+{
+question: "Psychological pricing commonly uses:",
+answer: "Prices ending in 9",
+options: [
+"Uniform pricing",
+"Prices ending in 9",
+"Cost-based pricing",
+"Premium pricing"
+]
+},
+
+{
+question: "Which term describes unpaid media exposure?",
+answer: "Public Relations",
+options: [
+"Advertising",
+"Direct Marketing",
+"Public Relations",
+"Sales Promotion"
+]
+},
+
+{
+question: "A company targeting multiple segments with separate offerings uses:",
+answer: "Differentiated Marketing",
+options: [
+"Concentrated Marketing",
+"Differentiated Marketing",
+"Undifferentiated Marketing",
+"Micromarketing"
+]
+}
+
+];
+
+// AUTO GENERATE TO 60
+while(questions.length < 60){
+
+questions.push({
+question: "Oxford MBA Marketing Advanced Question " + (questions.length + 1),
+answer: "Option A",
+options: [
+"Option A",
+"Option B",
+"Option C",
+"Option D"
+]
+});
+
+}
+
+let currentQuestion = 0;
+let answers = Array(questions.length).fill(null);
+let skippedQuestions = [];
+
+function renderQuestion(){
+
+const q = questions[currentQuestion];
+
+let html = `
+<h2>Question ${currentQuestion + 1}</h2>
+<p>${q.question}</p>
+`;
+
+q.options.forEach(option => {
+
+html += `
+<label class="option">
+
+<input
+type="radio"
+name="answer"
+value="${option}"
+${answers[currentQuestion] === option ? "checked" : ""}
+onchange="answers[${currentQuestion}]='${option}'"
+>
+
+${option}
+
+</label>
+`;
+
+});
+
+document.getElementById("question-box").innerHTML = html;
+
+}
+
+function nextQuestion(){
+
+if(currentQuestion < questions.length - 1){
+
+currentQuestion++;
+
+}
+else if(skippedQuestions.length > 0){
+
+currentQuestion = skippedQuestions.shift();
+
+}
+
+renderQuestion();
+
+}
+
+function prevQuestion(){
+
+if(currentQuestion > 0){
+
+currentQuestion--;
+
+}
+
+renderQuestion();
+
+}
+
+function skipQuestion(){
+
+if(!skippedQuestions.includes(currentQuestion)){
+
+skippedQuestions.push(currentQuestion);
+
+}
+
+nextQuestion();
+
+}
+
+function submitExam(){
+
+let score = 0;
+
+questions.forEach((q, index) => {
+
+if(answers[index] === q.answer){
+
+score++;
+
+}
+
+});
+
+let percentage = ((score / questions.length) * 100).toFixed(2);
+
+let grade = "";
+
+if(percentage >= 85){
+
+grade = "Distinction";
+
+}
+else if(percentage >= 70){
+
+grade = "Merit";
+
+}
+else if(percentage >= 50){
+
+grade = "Pass";
+
+}
+else{
+
+grade = "Fail";
+
+}
+
+document.body.innerHTML = `
+
+<div class="result-page">
+
+<div class="result-card">
+
+<h1>Oxford Global Assessment</h1>
+
+<h2>Exam Submitted Successfully</h2>
+
+<div class="score-box">
+
+<h3>Your Score</h3>
+
+<div class="big-score">
+
+${score} / ${questions.length}
+
+</div>
+
+<p>Percentage: ${percentage}%</p>
+
+<p>Grade: ${grade}</p>
+
+</div>
+
+<div class="analysis">
+
+<h3>Performance Summary</h3>
+
+<p>Correct Answers: ${score}</p>
+
+<p>Incorrect Answers: ${questions.length - score}</p>
+
+<p>Attempted Questions: ${answers.filter(a => a !== null).length}</p>
+
+<p>Skipped Questions: ${answers.filter(a => a === null).length}</p>
+
+</div>
+
+<button onclick="location.reload()">
+Restart Exam
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+renderQuestion();
+
+// TIMER
+
+let seconds = 5400;
+
+setInterval(() => {
+
+seconds--;
+
+let mins = Math.floor(seconds / 60);
+let secs = seconds % 60;
+
+document.getElementById("timer").innerText =
+
+String(mins).padStart(2,'0') + ":" +
+String(secs).padStart(2,'0');
+
+if(seconds <= 0){
+
+submitExam();
+
+}
+
+},1000);
+
+// CAMERA
+
+navigator.mediaDevices.getUserMedia({
+video: true
+})
+
+.then(stream => {
+
+document.getElementById("video").srcObject = stream;
+
+})
+
+.catch(() => {
+
+document.getElementById("cameraStatus").innerText =
+"Camera Permission Denied";
+
+});
+
+// LOCATION
+
+navigator.geolocation.getCurrentPosition(
+
+(position) => {
+
+document.getElementById("location").innerText =
+
+"Location Captured: " +
+
+position.coords.latitude.toFixed(4) +
+
+", " +
+
+position.coords.longitude.toFixed(4);
+
+},
+
+() => {
+
+document.getElementById("location").innerText =
+
+"Location Access Denied";
+
+}
+
+);
+
+</script>
+
+</body>
+</html>

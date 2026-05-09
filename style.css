@@ -1,0 +1,139 @@
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f6fb;
+}
+
+.header{
+    background:#002147;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+.header h1{
+    margin:0;
+    font-size:34px;
+}
+
+.topbar{
+    background:white;
+    display:flex;
+    justify-content:space-between;
+    padding:15px 30px;
+    font-weight:bold;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.container{
+    display:flex;
+    gap:20px;
+    padding:20px;
+}
+
+.left-panel{
+    width:30%;
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.right-panel{
+    width:70%;
+    background:white;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+video{
+    width:100%;
+    border-radius:12px;
+    background:black;
+    margin-top:15px;
+}
+
+.proctor-status{
+    margin-top:15px;
+}
+
+.option{
+    display:block;
+    padding:15px;
+    margin:12px 0;
+    background:#eef2f7;
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.option:hover{
+    background:#dde6f3;
+}
+
+.buttons{
+    margin-top:30px;
+}
+
+button{
+    padding:14px 22px;
+    margin-right:10px;
+    border:none;
+    border-radius:10px;
+    background:#002147;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+    transition:0.2s;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.result-page{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:#f4f6fb;
+}
+
+.result-card{
+    background:white;
+    padding:40px;
+    width:520px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+}
+
+.score-box{
+    margin-top:25px;
+    background:#eef3ff;
+    padding:25px;
+    border-radius:14px;
+}
+
+.big-score{
+    font-size:56px;
+    font-weight:bold;
+    color:#002147;
+    margin:20px 0;
+}
+
+.analysis{
+    margin-top:25px;
+    text-align:left;
+}
+
+.analysis p{
+    padding:10px 0;
+    border-bottom:1px solid #ddd;
+}
+
+#timer{
+    color:#002147;
+    font-size:20px;
+}
